@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "name": "twitter-engagements",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "keywords": [],
+  "author": "Larissa Rosalene <lerarosalene@outlook.com>",
+  "license": "ISC",
+  "dependencies": {
+    "esbuild": "^0.19.3",
+    "typescript": "^5.2.2",
+    "userscript-header-format": "^1.1.0"
+  }
+}
