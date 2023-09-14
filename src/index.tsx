@@ -46,7 +46,7 @@ function main() {
       <span onclick={(evt) => evt.stopPropagation()} class={ROOT_CLASS_NAME}>
         {"("}
         <a href={baseLink + "/likes"}>L</a> /{" "}
-        <a href={baseLink + "/reposts"}>R</a> /{" "}
+        <a href={baseLink + "/retweets"}>R</a> /{" "}
         <a href={baseLink + "/quotes"}>Q</a>
         {")"}
       </span>,
