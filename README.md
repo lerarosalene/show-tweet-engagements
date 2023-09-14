@@ -13,4 +13,4 @@ Your userscript manager should automatically pick up this link and offer install
 
 1. `npm ci`
 2. `npm run build`
-3. Grab your copy from `dist/twitter-show-engagements.user.js`
+3. Grab your copy from `dist/show-tweet-engagements.user.js`
