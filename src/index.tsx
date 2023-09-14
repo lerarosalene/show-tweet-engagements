@@ -4,8 +4,8 @@ const IS_TWEET_PATH = /^\/[^/]+\/status\/\d+\/?$/;
 const DATASET_PROCESSED_NAME = "twitterShowEngagementsProcessed";
 const ROOT_CLASS_NAME = "twitter-show-engagements";
 
-function isAnchor(node?: Element | null): node is HTMLAnchorElement {
-  return node?.tagName === "A";
+function isAnchor(node?: EventTarget | Element | null): node is HTMLAnchorElement {
+  return Boolean(node && ("tagName" in node) && node?.tagName === "A");
 }
 
 type TSAnchorChild = Omit<HTMLTimeElement, "parentElement"> & {
@@ -29,6 +29,36 @@ function isTweetTimestamp(node: Element): node is TSAnchorChild {
   return isTweetPath;
 }
 
+function waitPopstate() {
+  return new Promise<void>(resolve => {
+    const listener = () => {
+      window.removeEventListener('popstate', listener);
+      resolve();
+    };
+
+    window.addEventListener('popstate', listener);
+  });
+}
+
+function navigateWithoutReload(evt: MouseEvent) {
+  const currentTarget = evt.currentTarget;
+  if (!isAnchor(currentTarget)) {
+    return;
+  }
+
+  evt.preventDefault();
+  const href = currentTarget.href;
+
+  history.pushState(null, "", href);
+  waitPopstate().then(() => {
+    waitPopstate().then(() => {
+      window.scroll({ top: 0 });
+    });
+    history.forward();
+  });
+  history.back();
+}
+
 function main() {
   const timestamps = [...document.querySelectorAll("time")]
     .filter(isTweetTimestamp)
@@ -42,12 +72,13 @@ function main() {
     }
 
     const baseLink = ts.parentElement.href.replace(/\/$/, "");
+
     const engagements = render(
       <span onclick={(evt) => evt.stopPropagation()} class={ROOT_CLASS_NAME}>
         {"("}
-        <a href={baseLink + "/likes"}>L</a> /{" "}
-        <a href={baseLink + "/retweets"}>R</a> /{" "}
-        <a href={baseLink + "/quotes"}>Q</a>
+        <a onclick={navigateWithoutReload} href={baseLink + "/likes"}>L</a> /{" "}
+        <a onclick={navigateWithoutReload} href={baseLink + "/retweets"}>R</a> /{" "}
+        <a onclick={navigateWithoutReload} href={baseLink + "/quotes"}>Q</a>
         {")"}
       </span>,
     );
