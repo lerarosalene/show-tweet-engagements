@@ -16,6 +16,8 @@ async function main() {
     author: package.author,
     match: "*://*.twitter.com/*",
     license: package.license,
+    updateURL: "https://github.com/lerarosalene/show-tweet-engagements/releases/latest/download/show-tweet-engagements.user.js",
+    downloadURL: "https://github.com/lerarosalene/show-tweet-engagements/releases/latest/download/show-tweet-engagements.user.js",
   });
 
   await esbuild.build({
