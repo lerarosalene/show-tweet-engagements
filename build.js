@@ -9,19 +9,20 @@ async function main() {
   const package = JSON.parse(await fsp.readFile('package.json', 'utf-8'));
 
   const header = Header.fromObject({
-    name: "Show tweet Likes, Retweets and Quotes",
+    name: "Show Tweet Engagements",
     namespace: "https://lerarosalene.github.io/",
     version: package.version,
-    description: "Show tweet Likes, Retweets and Quotes",
+    description: package.description,
     author: package.author,
     match: "*://*.twitter.com/*",
+    license: package.license,
   });
 
   await esbuild.build({
     entryPoints: [path.join('src', 'index.tsx')],
     bundle: true,
     minify: false,
-    outfile: path.join('dist', 'twitter-show-engagements.user.js'),
+    outfile: path.join('dist', 'show-tweet-engagements.user.js'),
     banner: {
       js: header.toString() + "\n",
     }

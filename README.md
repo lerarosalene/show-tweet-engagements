@@ -1,4 +1,4 @@
-## Show tweet Likes, Retweets and Quotes
+## Show Tweet Engagements
 
 This userscript is pretty straightforward. It shows (L / R / Q) block near every timestamped tweet link.
 
